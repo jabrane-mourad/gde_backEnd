@@ -15,8 +15,8 @@ public class Administrateur extends Utilisateur {
     @Column
     private String idAdmin;
 
-    public Administrateur(Long id, String nom, String prenom, Date dateNaissance, String email, Role role, String password, String idAdmin) {
-        super(id, nom, prenom, dateNaissance, email, role, password);
+    public Administrateur(Long id, String nom, String prenom, Date dateNaissance, String email, String password, String idAdmin) {
+        super(id, nom, prenom, dateNaissance, email,Role.ROLE_ADMINISTRATEUR, password);
         this.idAdmin = idAdmin;
     }
 }

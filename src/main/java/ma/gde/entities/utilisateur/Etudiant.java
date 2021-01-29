@@ -27,8 +27,8 @@ public class Etudiant extends Utilisateur {
     @OneToMany(targetEntity = Absence.class, mappedBy = "etudiant")
     private Collection<Absence> absences = new ArrayList<>();
 
-    public Etudiant(Long id, String nom, String prenom, Date dateNaissance, String email, Role role, String password, String codeMasar, Niveau niveau) {
-        super(id, nom, prenom, dateNaissance, email, role, password);
+    public Etudiant(Long id, String nom, String prenom, Date dateNaissance, String email, String password, String codeMasar, Niveau niveau) {
+        super(id, nom, prenom, dateNaissance, email, Role.ROLE_ETUDIANT, password);
         this.codeMasar = codeMasar;
         this.niveau = niveau;
     }

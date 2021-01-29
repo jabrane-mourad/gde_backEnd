@@ -35,14 +35,14 @@ public class GdeApplication {
         return args -> {
             //Etudiant e = new Etudiant(null, "jabrane", "mourad", new Date(), "xjabrane@gmail.com", "ETUDIANT", "XJ123", "f135368925");
             Etudiant e = new Etudiant(null, "Etudiant", "Etudiant", new Date(),
-                    "Etudiant@gmail.com", Role.ROLE_ETUDIANT, "Etudiant", "codem", Niveau.cinquiemeAnnee);
+                    "Etudiant@gmail.com", "Etudiant", "codem", Niveau.cinquiemeAnnee);
             utilisateurService.save(e);
             Administrateur a = new Administrateur(null, "Administrateur", "Administrateur", new Date(),
-                    "Administrateur@gmail.com", Role.ROLE_ADMINISTRATEUR, "Administrateur", "idAdmin");
+                    "Administrateur@gmail.com", "Administrateur", "idAdmin");
             utilisateurService.save(a);
 
             Enseignant en = new Enseignant(null, "Enseignant", "Enseignant", new Date(),
-                    "Enseignant@gmail.com", Role.ROLE_ENSEIGNANT, "Enseignant", "idEnseignant");
+                    "Enseignant@gmail.com", "Enseignant", "idEnseignant");
             utilisateurService.save(en);
 
 
