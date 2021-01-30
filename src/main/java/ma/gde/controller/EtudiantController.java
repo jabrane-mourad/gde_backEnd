@@ -1,25 +1,33 @@
 package ma.gde.controller;
 
-import ma.gde.dao.EtudiantRepo;
-import ma.gde.entities.utilisateur.Etudiant;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ma.gde.dao.ModuleRepo;
+import ma.gde.dao.SemestreRepo;
+import ma.gde.entities.Filiere;
+import ma.gde.entities.Module;
+import ma.gde.entities.Semestre;
+import ma.gde.entities.utilisateur.Niveau;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
+@RequestMapping("/etudiants")
 public class EtudiantController {
-    private EtudiantRepo etudiantRepo;
-
-    public EtudiantController(EtudiantRepo etudiantRepo) {
-        this.etudiantRepo = etudiantRepo;
+    @Autowired
+    SemestreRepo semestreRepo;
+    @GetMapping("/modules")
+    public Semestre modules(@RequestParam("nom") String nom,
+                                @RequestParam("niveau") Niveau niveau,
+                                @RequestParam("filiere") Filiere filiere){
+        return semestreRepo.findByEtudiantInformation(nom,niveau,filiere);
     }
 
-    @RequestMapping(value = "/all")
-    public List<Etudiant> createAuthentionToken() {
-
-        return etudiantRepo.findAll();
+    @GetMapping("/emplois")
+    public Semestre emplois(@RequestParam("semestre") String semestre,
+                            @RequestParam("niveau") Niveau niveau,
+                            @RequestParam("filiere") Filiere filiere){
+        return semestreRepo.findByEtudiantInformation(semestre,niveau,filiere);
     }
-
 }

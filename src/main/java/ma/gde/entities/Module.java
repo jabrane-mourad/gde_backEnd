@@ -1,5 +1,8 @@
 package ma.gde.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,25 +18,28 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class Module {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
     private String nom;
-    @ManyToOne @JoinColumn( nullable=false)
+    private String cleCours;
+    private String source;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    @JsonIgnore
     private Semestre semestre;
 
-    @OneToMany(targetEntity = Cours.class,mappedBy = "module")
-    private Collection<Cours> elements=new ArrayList<>();
-
-    @OneToMany(targetEntity = Note.class,mappedBy = "module")
-    private Collection<Note> notes=new ArrayList<>();
+    @OneToMany(targetEntity = Note.class, mappedBy = "module")
+    private Collection<Note> notes = new ArrayList<>();
 
     @OneToMany(targetEntity = Absence.class, mappedBy = "module")
     private Collection<Absence> absences = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn( nullable=false)
+    @JoinColumn(nullable = false)
     private Enseignant enseignant;
 
 }

@@ -1,5 +1,7 @@
 package ma.gde.entities.utilisateur;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class Administrateur extends Utilisateur {
     @Column
     private String idAdmin;
