@@ -1,9 +1,9 @@
-package ma.gde.entities;
+package ma.gde.enun;
 
 public enum Filiere {
-    All,
+    CP,
     GL,
-    DIID,
+    GIID,
     GRT,
     GPI,
     GE

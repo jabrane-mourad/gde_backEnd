@@ -1,4 +1,4 @@
-package ma.gde.entities;
+package ma.gde.enun;
 
 public enum Departement {
     INFO,

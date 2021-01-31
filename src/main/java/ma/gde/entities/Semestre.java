@@ -6,9 +6,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ma.gde.entities.utilisateur.Niveau;
+import ma.gde.enun.Niveau;
+import ma.gde.enun.Departement;
+import ma.gde.enun.Filiere;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -16,9 +19,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
-public class Semestre {
+public class Semestre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

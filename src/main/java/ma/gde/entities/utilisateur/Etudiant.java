@@ -1,16 +1,22 @@
 package ma.gde.entities.utilisateur;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ma.gde.entities.Filiere;
+import ma.gde.entities.Demande;
+import ma.gde.enun.Filiere;
 import ma.gde.entities.data.Absence;
 import ma.gde.entities.data.Note;
+import ma.gde.enun.Niveau;
+import ma.gde.enun.Role;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -19,7 +25,7 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
-public class Etudiant extends Utilisateur {
+public class Etudiant extends Utilisateur implements Serializable {
     @Column
     private String codeMasar;
     @Column
@@ -32,6 +38,10 @@ public class Etudiant extends Utilisateur {
 
     @OneToMany(targetEntity = Absence.class, mappedBy = "etudiant")
     private Collection<Absence> absences = new ArrayList<>();
+
+    @OneToMany(targetEntity = Demande.class, mappedBy = "etudiant",fetch = FetchType.LAZY)
+    private Collection<Demande> demandes = new ArrayList<>();
+
 
     public Etudiant(Long id, String nom, String prenom, Date dateNaissance, String email, String password, String codeMasar, Niveau niveau,Filiere filiere) {
         super(id, nom, prenom, dateNaissance, email, Role.ROLE_ETUDIANT, password);

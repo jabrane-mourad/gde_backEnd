@@ -1,16 +1,16 @@
 package ma.gde;
 
 import ma.gde.controller.service.UtilisateurService;
+import ma.gde.dao.DemandeRepo;
 import ma.gde.dao.ModuleRepo;
+import ma.gde.dao.NoteRepo;
 import ma.gde.dao.SemestreRepo;
-import ma.gde.entities.Departement;
-import ma.gde.entities.Filiere;
-import ma.gde.entities.Module;
-import ma.gde.entities.Semestre;
+import ma.gde.entities.*;
+import ma.gde.entities.data.Note;
 import ma.gde.entities.utilisateur.Administrateur;
 import ma.gde.entities.utilisateur.Enseignant;
 import ma.gde.entities.utilisateur.Etudiant;
-import ma.gde.entities.utilisateur.Niveau;
+import ma.gde.enun.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @SpringBootApplication
@@ -34,17 +37,20 @@ public class GdeApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/*").allowedHeaders("*").allowedOrigins("*").allowedMethods("*");
-
             }
         };
     }
 
     @Bean
-    CommandLineRunner start(UtilisateurService utilisateurService, ModuleRepo moduleRepo, SemestreRepo semestreRepo) {
+    CommandLineRunner start(UtilisateurService utilisateurService,
+                            ModuleRepo moduleRepo,
+                            SemestreRepo semestreRepo,
+                            DemandeRepo demandeRepo,
+                            NoteRepo noteRepo) {
         return args -> {
             //Etudiant e = new Etudiant(null, "jabrane", "mourad", new Date(), "xjabrane@gmail.com", "ETUDIANT", "XJ123", "f135368925");
             Etudiant e = new Etudiant(null, "Etudiant", "Etudiant", new Date(),
-                    "Etudiant@gmail.com", "Etudiant", "codem", Niveau.premierAnnee, Filiere.All);
+                    "Etudiant@gmail.com", "Etudiant", "codem", Niveau.quatriemeAnnee, Filiere.CP);
             utilisateurService.save(e);
             Administrateur a = new Administrateur(null, "Administrateur", "Administrateur", new Date(),
                     "Administrateur@gmail.com", "Administrateur", "idAdmin");
@@ -53,12 +59,14 @@ public class GdeApplication {
             Enseignant en = new Enseignant(null, "Enseignant", "Enseignant", new Date(),
                     "Enseignant@gmail.com", "Enseignant", "idEnseignant");
             utilisateurService.save(en);
+            demandeRepo.save(new Demande(null, TypeDemande.Convention, Etat.attente,"qlq chose1","just1",e));
+            demandeRepo.save(new Demande(null,TypeDemande.ReleveDesNotes,Etat.rejetée,"qlq chose2","just2",e));
+            demandeRepo.save(new Demande(null,TypeDemande.RetirerDiplome,Etat.accepter,"qlq chose3","just3",e));
 
 
 
-
-            Semestre s1N1 = new Semestre(null, "s1", Niveau.premierAnnee, Filiere.All, Departement.INFO, "https://drive.google.com/file/d/1kkpBGwnhZmTdJvXh9zzAV1wGvCL0Ljsj/view?usp=sharing", null);
-            Semestre s2N1 = new Semestre(null, "s2", Niveau.premierAnnee, Filiere.All, Departement.INFO, "https://drive.google.com/file/d/1vm4vXVo5mzZWEfKBGKyMdFe6T917pX2b/view?usp=sharing", null);
+            Semestre s1N1 = new Semestre(null, "s1", Niveau.premierAnnee, Filiere.CP, Departement.INFO, "https://drive.google.com/file/d/1kkpBGwnhZmTdJvXh9zzAV1wGvCL0Ljsj/view?usp=sharing", null);
+            Semestre s2N1 = new Semestre(null, "s2", Niveau.premierAnnee, Filiere.CP, Departement.INFO, "https://drive.google.com/file/d/1vm4vXVo5mzZWEfKBGKyMdFe6T917pX2b/view?usp=sharing", null);
 
             Semestre s1N2 = new Semestre(null, "s1", Niveau.deuxiemeAnnee, Filiere.GL, Departement.INFO, "https://drive.google.com/file/d/1oCbc4lXYMLyDVEBNxsCfj87e7WEcecU0/view?usp=sharing", null);
             Semestre s2N2 = new Semestre(null, "s2", Niveau.deuxiemeAnnee, Filiere.GL, Departement.INFO, "https://drive.google.com/file/d/1wGbGNhiUQ3Au8mVo_cw1prqDK0tmap3M/view?usp=sharing", null);
@@ -109,7 +117,8 @@ public class GdeApplication {
             moduleRepo.save(new Module(null, "Electronique", "M322", "https://drive.google.com/file/d/1RoVGX7QeJ6M1YO3GT4QngeZOIRwW2T-s/view?usp=sharing", s2N3Gl, null, null, en));
             moduleRepo.save(new Module(null, "Statistiques", "M323", "https://drive.google.com/file/d/1q9upRd4tdwdJveJM7vYYmENQYK8PTtyf/view?usp=sharing", s2N3Gl, null, null, en));
 
-            moduleRepo.save(new Module(null, "Méthodes d'analyse et conception", "M411", "https://drive.google.com/file/d/1d1Vf2FhPMuGtNU5X08fFKFhz8olt_Qbc/view?usp=sharing", s1N4Gl, null, null, en));
+            Module module1=new Module(null, "Méthodes d'analyse et conception", "M411", "https://drive.google.com/file/d/1d1Vf2FhPMuGtNU5X08fFKFhz8olt_Qbc/view?usp=sharing", s1N4Gl, null, null, en);
+            moduleRepo.save(module1);
             moduleRepo.save(new Module(null, "Recherche Opérationnelle", "M412", "https://drive.google.com/file/d/11cqdxq16jVOzQz45rOb2N0PTxFw2IuE5/view?usp=sharing", s1N4Gl, null, null, en));
             moduleRepo.save(new Module(null, "Technologie", "M413", "https://drive.google.com/file/d/1cTuNbYlU1WY6LqOx8rGE-hM6u5N72S9P/view?usp=sharing", s1N4Gl, null, null, en));
 
@@ -124,6 +133,7 @@ public class GdeApplication {
 
             moduleRepo.save(new Module(null, "Pfe", "M521", "https://drive.google.com/file/d/1sT_EehtEt8n5nxLdDAj0kOK5BrFJCpfO/view?usp=sharing", s2N5Gl, null, null, en));
 
+            noteRepo.save(new Note(null, (float) 18.20,module1,e));
 
             System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
             //System.out.println(moduleRepo.findByEtudiantInformation("s1",Niveau.quatriemeAnnee,Filiere.GL));

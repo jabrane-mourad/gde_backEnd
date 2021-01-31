@@ -9,22 +9,24 @@ import ma.gde.entities.Module;
 import ma.gde.entities.utilisateur.Etudiant;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
-public class Note {
+public class Note implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String nom;
+    private float valeur;
     @ManyToOne
     @JoinColumn(nullable = false)
     private Module module;
     @ManyToOne
-    @JoinColumn( nullable=false)
+    @JoinColumn(nullable = false)
     private Etudiant etudiant;
 }

@@ -1,4 +1,4 @@
-package ma.gde.entities.utilisateur;
+package ma.gde.enun;
 
 public enum Niveau {
     premierAnnee,

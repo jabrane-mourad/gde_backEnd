@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ma.gde.enun.Role;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -17,7 +19,7 @@ import java.util.Date;
 @JsonSubTypes({@JsonSubTypes.Type(name = "Etudiant", value = Etudiant.class),
         @JsonSubTypes.Type(name = "Enseignant", value = Enseignant.class),
         @JsonSubTypes.Type(name = "Administrateur", value = Administrateur.class),})
-public abstract class Utilisateur {
+public abstract class Utilisateur implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

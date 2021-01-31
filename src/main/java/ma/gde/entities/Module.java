@@ -11,6 +11,7 @@ import ma.gde.entities.data.Note;
 import ma.gde.entities.utilisateur.Enseignant;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -18,8 +19,7 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
-public class Module {
+public class Module implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

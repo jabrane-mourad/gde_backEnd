@@ -10,13 +10,13 @@ import ma.gde.entities.Semestre;
 import ma.gde.entities.utilisateur.Etudiant;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
-public class Absence {
+public class Absence implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
