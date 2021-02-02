@@ -1,18 +1,15 @@
 package ma.gde.controller;
 
-import ma.gde.dao.DemandeRepo;
-import ma.gde.dao.EtudiantRepo;
-import ma.gde.dao.NoteRepo;
-import ma.gde.dao.SemestreRepo;
+import ma.gde.dao.*;
 import ma.gde.dto.DemandeDTO;
 import ma.gde.entities.Demande;
 import ma.gde.entities.Semestre;
+import ma.gde.entities.data.Absence;
 import ma.gde.entities.data.Note;
 import ma.gde.entities.utilisateur.Etudiant;
 import ma.gde.enun.Etat;
 import ma.gde.enun.Filiere;
 import ma.gde.enun.Niveau;
-import ma.gde.enun.TypeDemande;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,14 +19,20 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/etudiants")
 public class EtudiantController {
-    @Autowired
+
     private SemestreRepo semestreRepo;
-    @Autowired
     private DemandeRepo demandeRepo;
-    @Autowired
     private EtudiantRepo etudiantRepo;
-    @Autowired
     private NoteRepo noteRepo;
+    private AbsenceRepo absenceRepo;
+
+    public EtudiantController(SemestreRepo semestreRepo, DemandeRepo demandeRepo, EtudiantRepo etudiantRepo, NoteRepo noteRepo, AbsenceRepo absenceRepo) {
+        this.semestreRepo = semestreRepo;
+        this.demandeRepo = demandeRepo;
+        this.etudiantRepo = etudiantRepo;
+        this.noteRepo = noteRepo;
+        this.absenceRepo = absenceRepo;
+    }
 
     @GetMapping("/modules")
     public Semestre modules(@RequestParam("nom") String nom,
@@ -38,7 +41,7 @@ public class EtudiantController {
         return semestreRepo.findByEtudiantInformation(nom, niveau, filiere);
     }
 
-    @PostMapping("/modules")
+    @PostMapping("/demandes")
     public void ajouterDemande(@RequestBody DemandeDTO demandeDTO) {
         demandeRepo.save(new Demande(null,
                 demandeDTO.getTypeDemande(),
@@ -67,8 +70,14 @@ public class EtudiantController {
     }
 
     @GetMapping("/notes")
-    public List<Note> notes(@RequestParam("codeMasar") String codeMasar,
-                            @RequestParam("niveau") Niveau niveau) {
+    public List<Note> getNnotes(@RequestParam("codeMasar") String codeMasar,
+                                @RequestParam("niveau") Niveau niveau) {
         return noteRepo.findNoteByEtudiantInformation(codeMasar, niveau);
+    }
+
+    @GetMapping("/absences")
+    public List<Absence> getAbsences(@RequestParam("codeMasar") String codeMasar,
+                                     @RequestParam("niveau") Niveau niveau) {
+        return absenceRepo.findAbsenceByEtudiantInformation(codeMasar, niveau);
     }
 }

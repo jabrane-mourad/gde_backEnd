@@ -1,7 +1,7 @@
 package ma.gde.security.restController;
 
 
-import ma.gde.controller.service.UtilisateurService;
+import ma.gde.controller.service.implementation.UtilisateurService;
 import ma.gde.entities.utilisateur.Utilisateur;
 import ma.gde.security.security.jwt.config.JwtTokenUtil;
 import ma.gde.security.security.jwt.model.JwtRequest;

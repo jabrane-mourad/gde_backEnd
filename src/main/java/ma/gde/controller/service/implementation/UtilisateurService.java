@@ -1,4 +1,4 @@
-package ma.gde.controller.service;
+package ma.gde.controller.service.implementation;
 
 import ma.gde.dao.UtilisateurRepo;
 import ma.gde.entities.utilisateur.Utilisateur;

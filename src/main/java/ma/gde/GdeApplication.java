@@ -1,27 +1,31 @@
 package ma.gde;
 
-import ma.gde.controller.service.UtilisateurService;
-import ma.gde.dao.DemandeRepo;
-import ma.gde.dao.ModuleRepo;
-import ma.gde.dao.NoteRepo;
-import ma.gde.dao.SemestreRepo;
-import ma.gde.entities.*;
+import ma.gde.controller.FilesController;
+import ma.gde.controller.service.implementation.UtilisateurService;
+import ma.gde.controller.service.interfaces.FilesStorageService;
+import ma.gde.dao.*;
+import ma.gde.entities.Demande;
+import ma.gde.entities.Module;
+import ma.gde.entities.Semestre;
+import ma.gde.entities.data.Absence;
 import ma.gde.entities.data.Note;
 import ma.gde.entities.utilisateur.Administrateur;
 import ma.gde.entities.utilisateur.Enseignant;
 import ma.gde.entities.utilisateur.Etudiant;
 import ma.gde.enun.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @SpringBootApplication
@@ -46,23 +50,24 @@ public class GdeApplication {
                             ModuleRepo moduleRepo,
                             SemestreRepo semestreRepo,
                             DemandeRepo demandeRepo,
-                            NoteRepo noteRepo) {
+                            NoteRepo noteRepo,
+                            AbsenceRepo absenceRepo,
+                            FilesStorageService storageService) {
         return args -> {
             //Etudiant e = new Etudiant(null, "jabrane", "mourad", new Date(), "xjabrane@gmail.com", "ETUDIANT", "XJ123", "f135368925");
             Etudiant e = new Etudiant(null, "Etudiant", "Etudiant", new Date(),
-                    "Etudiant@gmail.com", "Etudiant", "codem", Niveau.quatriemeAnnee, Filiere.CP);
+                    "Etudiant@gmail.com", "Etudiant", "codem", Niveau.quatriemeAnnee, Filiere.GL);
             utilisateurService.save(e);
             Administrateur a = new Administrateur(null, "Administrateur", "Administrateur", new Date(),
-                    "Administrateur@gmail.com", "Administrateur", "idAdmin");
+                    "administrateur123@gmail.com", "administrateur123", "idAdmin");
             utilisateurService.save(a);
 
             Enseignant en = new Enseignant(null, "Enseignant", "Enseignant", new Date(),
                     "Enseignant@gmail.com", "Enseignant", "idEnseignant");
             utilisateurService.save(en);
-            demandeRepo.save(new Demande(null, TypeDemande.Convention, Etat.attente,"qlq chose1","just1",e));
-            demandeRepo.save(new Demande(null,TypeDemande.ReleveDesNotes,Etat.rejetée,"qlq chose2","just2",e));
-            demandeRepo.save(new Demande(null,TypeDemande.RetirerDiplome,Etat.accepter,"qlq chose3","just3",e));
-
+            demandeRepo.save(new Demande(null, TypeDemande.Convention, Etat.attente, "qlq chose1", "just1", e));
+            demandeRepo.save(new Demande(null, TypeDemande.ReleveDesNotes, Etat.rejetée, "qlq chose2", "just2", e));
+            demandeRepo.save(new Demande(null, TypeDemande.RetirerDiplome, Etat.accepter, "qlq chose3", "just3", e));
 
 
             Semestre s1N1 = new Semestre(null, "s1", Niveau.premierAnnee, Filiere.CP, Departement.INFO, "https://drive.google.com/file/d/1kkpBGwnhZmTdJvXh9zzAV1wGvCL0Ljsj/view?usp=sharing", null);
@@ -91,49 +96,52 @@ public class GdeApplication {
             semestreRepo.save(s2N4Gl);
             semestreRepo.save(s1N5Gl);
             semestreRepo.save(s2N5Gl);
-            moduleRepo.save(new Module(null, "Analyse", "M111", "https://drive.google.com/file/d/1ziW2Q7oT9TPcuXP0kS1zM05rZce06RUu/view?usp=sharing", s1N1, null, null, en));
-            moduleRepo.save(new Module(null, "Mécanique", "M112", "https://drive.google.com/file/d/1zpz8b73n9J-WrYD5biLYLQj0PdE8vIIG/view?usp=sharing", s1N1, null, null, en));
-            moduleRepo.save(new Module(null, "Algèbre", "M113", "https://drive.google.com/file/d/1FCojUP6p6FbgZFn9gD27AxFEqA-IHJfS/view?usp=sharing", s1N1, null, null, en));
+            moduleRepo.save(new Module(null, "Analyse", "M111", "https://drive.google.com/file/d/1ziW2Q7oT9TPcuXP0kS1zM05rZce06RUu/view?usp=sharing", 20, s1N1, null, null, en));
+            moduleRepo.save(new Module(null, "Mécanique", "M112", "https://drive.google.com/file/d/1zpz8b73n9J-WrYD5biLYLQj0PdE8vIIG/view?usp=sharing", 16, s1N1, null, null, en));
+            moduleRepo.save(new Module(null, "Algèbre", "M113", "https://drive.google.com/file/d/1FCojUP6p6FbgZFn9gD27AxFEqA-IHJfS/view?usp=sharing", 32, s1N1, null, null, en));
 
-            moduleRepo.save(new Module(null, "Informatique", "M121", "https://drive.google.com/file/d/1ViS1-U5O7a0y4zL8BiF7ztguKneIWQIr/view?usp=sharing", s2N1, null, null, en));
-            moduleRepo.save(new Module(null, "Physique", "M122", "https://drive.google.com/file/d/1qQCxtusFED86gzivZFD1bIHRWrKNEiCY/view?usp=sharing", s2N1, null, null, en));
-            moduleRepo.save(new Module(null, "Français", "M123", "https://drive.google.com/file/d/104T1geP2yNaGMcaGKRiUr7jwmj3OhKXb/view?usp=sharing", s2N1, null, null, en));
-
-
-            moduleRepo.save(new Module(null, "Electronique", "M211", "https://drive.google.com/file/d/1RyJWK9q5aFFEXsb86ovMp4Milk3CC6Ec/view?usp=sharing", s1N2, null, null, en));
-            moduleRepo.save(new Module(null, "Electromagnetisme", "M212", "https://drive.google.com/file/d/1rNMU0_VFi_eFplDb7KXJBi7zR61omGd0/view?usp=sharing", s1N2, null, null, en));
-            moduleRepo.save(new Module(null, "Anglais", "M213", "https://drive.google.com/file/d/1pymbxnpBkyNfu876pCHnCDY9DrmkYWJL/view?usp=sharing", s1N2, null, null, en));
-
-            moduleRepo.save(new Module(null, "Language c", "M221", "https://drive.google.com/file/d/10Vp12ayc7TSSHaegd4ZJnwTVuJFg08pU/view?usp=sharing", s2N2, null, null, en));
-            moduleRepo.save(new Module(null, "Matlab", "M222", "https://drive.google.com/file/d/11YrPhrsIpCmR8yS3FErTPlgJOUeUOK-G/view?usp=sharing", s2N2, null, null, en));
-            moduleRepo.save(new Module(null, "Français", "M223", "https://drive.google.com/file/d/1iR15apbOxJcPuDGNGpP-3GTkW-MX2P4B/view?usp=sharing", s2N2, null, null, en));
+            moduleRepo.save(new Module(null, "Informatique", "M121", "https://drive.google.com/file/d/1ViS1-U5O7a0y4zL8BiF7ztguKneIWQIr/view?usp=sharing", 15, s2N1, null, null, en));
+            moduleRepo.save(new Module(null, "Physique", "M122", "https://drive.google.com/file/d/1qQCxtusFED86gzivZFD1bIHRWrKNEiCY/view?usp=sharing", 10, s2N1, null, null, en));
+            moduleRepo.save(new Module(null, "Français", "M123", "https://drive.google.com/file/d/104T1geP2yNaGMcaGKRiUr7jwmj3OhKXb/view?usp=sharing", 22, s2N1, null, null, en));
 
 
-            moduleRepo.save(new Module(null, "Algorithmique", "M311", "https://drive.google.com/file/d/1zEUpRN7hdQIAGxqGWJ9qv6FJPmOn9ZAb/view?usp=sharing", s1N3Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Probabilité", "M312", "https://drive.google.com/file/d/1xV7nZ5MCZsDLxXIDp18GAv7aRo30iPFM/view?usp=sharing", s1N3Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Economie", "M313", "https://drive.google.com/file/d/1JrW7qXf77_scIVhhAzYu5NUEKFXOnEW0/view?usp=sharing", s1N3Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Electronique", "M211", "https://drive.google.com/file/d/1RyJWK9q5aFFEXsb86ovMp4Milk3CC6Ec/view?usp=sharing", 14, s1N2, null, null, en));
+            moduleRepo.save(new Module(null, "Electromagnetisme", "M212", "https://drive.google.com/file/d/1rNMU0_VFi_eFplDb7KXJBi7zR61omGd0/view?usp=sharing", 15, s1N2, null, null, en));
+            moduleRepo.save(new Module(null, "Anglais", "M213", "https://drive.google.com/file/d/1pymbxnpBkyNfu876pCHnCDY9DrmkYWJL/view?usp=sharing", 24, s1N2, null, null, en));
 
-            moduleRepo.save(new Module(null, "Systèmes d'information", "M321", "https://drive.google.com/file/d/1m3enK7KofJo4Jv4nExWdOlZB8Y-xZjwm/view?usp=sharing", s2N3Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Electronique", "M322", "https://drive.google.com/file/d/1RoVGX7QeJ6M1YO3GT4QngeZOIRwW2T-s/view?usp=sharing", s2N3Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Statistiques", "M323", "https://drive.google.com/file/d/1q9upRd4tdwdJveJM7vYYmENQYK8PTtyf/view?usp=sharing", s2N3Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Language c", "M221", "https://drive.google.com/file/d/10Vp12ayc7TSSHaegd4ZJnwTVuJFg08pU/view?usp=sharing", 20, s2N2, null, null, en));
+            moduleRepo.save(new Module(null, "Matlab", "M222", "https://drive.google.com/file/d/11YrPhrsIpCmR8yS3FErTPlgJOUeUOK-G/view?usp=sharing", 8, s2N2, null, null, en));
+            moduleRepo.save(new Module(null, "Français", "M223", "https://drive.google.com/file/d/1iR15apbOxJcPuDGNGpP-3GTkW-MX2P4B/view?usp=sharing", 16, s2N2, null, null, en));
 
-            Module module1=new Module(null, "Méthodes d'analyse et conception", "M411", "https://drive.google.com/file/d/1d1Vf2FhPMuGtNU5X08fFKFhz8olt_Qbc/view?usp=sharing", s1N4Gl, null, null, en);
+
+            moduleRepo.save(new Module(null, "Algorithmique", "M311", "https://drive.google.com/file/d/1zEUpRN7hdQIAGxqGWJ9qv6FJPmOn9ZAb/view?usp=sharing", 22, s1N3Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Probabilité", "M312", "https://drive.google.com/file/d/1xV7nZ5MCZsDLxXIDp18GAv7aRo30iPFM/view?usp=sharing", 24, s1N3Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Economie", "M313", "https://drive.google.com/file/d/1JrW7qXf77_scIVhhAzYu5NUEKFXOnEW0/view?usp=sharing", 25, s1N3Gl, null, null, en));
+
+            moduleRepo.save(new Module(null, "Systèmes d'information", "M321", "https://drive.google.com/file/d/1m3enK7KofJo4Jv4nExWdOlZB8Y-xZjwm/view?usp=sharing", 12, s2N3Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Electronique", "M322", "https://drive.google.com/file/d/1RoVGX7QeJ6M1YO3GT4QngeZOIRwW2T-s/view?usp=sharing", 14, s2N3Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Statistiques", "M323", "https://drive.google.com/file/d/1q9upRd4tdwdJveJM7vYYmENQYK8PTtyf/view?usp=sharing", 18, s2N3Gl, null, null, en));
+
+            Module module1 = new Module(null, "Méthodes d'analyse et conception", "M411", "https://drive.google.com/file/d/1d1Vf2FhPMuGtNU5X08fFKFhz8olt_Qbc/view?usp=sharing", 28, s1N4Gl, null, null, en);
             moduleRepo.save(module1);
-            moduleRepo.save(new Module(null, "Recherche Opérationnelle", "M412", "https://drive.google.com/file/d/11cqdxq16jVOzQz45rOb2N0PTxFw2IuE5/view?usp=sharing", s1N4Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Technologie", "M413", "https://drive.google.com/file/d/1cTuNbYlU1WY6LqOx8rGE-hM6u5N72S9P/view?usp=sharing", s1N4Gl, null, null, en));
+            Module module2 = new Module(null, "Recherche Opérationnelle", "M412", "https://drive.google.com/file/d/11cqdxq16jVOzQz45rOb2N0PTxFw2IuE5/view?usp=sharing", 16, s1N4Gl, null, null, en);
+            moduleRepo.save(module2);
+            moduleRepo.save(new Module(null, "Technologie", "M413", "https://drive.google.com/file/d/1cTuNbYlU1WY6LqOx8rGE-hM6u5N72S9P/view?usp=sharing", 14, s1N4Gl, null, null, en));
 
-            moduleRepo.save(new Module(null, "Systèmes", "M421", "https://drive.google.com/file/d/1fi0U58id8kjsbgWDhZ24cRTKEJB0lWs6/view?usp=sharing", s2N4Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Fonctions  clés de l'entreprise", "M422", ":https://drive.google.com/file/d/1olFnBhTpYuwMwyQfupV2t7I9epEBzzXk/view?usp=sharing", s2N4Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Oracle", "M423", "https://drive.google.com/file/d/1NxjiFZyAkgm6YloumwQWKDISX6_bl2sM/view?usp=sharing", s2N4Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Systèmes", "M421", "https://drive.google.com/file/d/1fi0U58id8kjsbgWDhZ24cRTKEJB0lWs6/view?usp=sharing", 15, s2N4Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Fonctions  clés de l'entreprise", "M422", ":https://drive.google.com/file/d/1olFnBhTpYuwMwyQfupV2t7I9epEBzzXk/view?usp=sharing", 18, s2N4Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Oracle", "M423", "https://drive.google.com/file/d/1NxjiFZyAkgm6YloumwQWKDISX6_bl2sM/view?usp=sharing", 18, s2N4Gl, null, null, en));
 
-            moduleRepo.save(new Module(null, "Technologie jee", "M511", "https://drive.google.com/file/d/1mDlrQclvo8ZIAsX19y3yQKrXmotuhirS/view?usp=sharing", s1N5Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Administration et Sécurité Systèmes & Réseaux", "M512", "https://drive.google.com/file/d/1xbjXCRqU5j6I3yFWMMTH6ht-cgSBg55H/view?usp=sharing", s1N5Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Système distribué ", "M513", "https://drive.google.com/file/d/1owexNQgJXPddN8K7QhcD30B6bgQveK5G/view?usp=sharing", s1N5Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Technologie jee", "M511", "https://drive.google.com/file/d/1mDlrQclvo8ZIAsX19y3yQKrXmotuhirS/view?usp=sharing", 20, s1N5Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Administration et Sécurité Systèmes & Réseaux", "M512", "https://drive.google.com/file/d/1xbjXCRqU5j6I3yFWMMTH6ht-cgSBg55H/view?usp=sharing", 22, s1N5Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Système distribué ", "M513", "https://drive.google.com/file/d/1owexNQgJXPddN8K7QhcD30B6bgQveK5G/view?usp=sharing", 26, s1N5Gl, null, null, en));
 
 
-            moduleRepo.save(new Module(null, "Pfe", "M521", "https://drive.google.com/file/d/1sT_EehtEt8n5nxLdDAj0kOK5BrFJCpfO/view?usp=sharing", s2N5Gl, null, null, en));
+            moduleRepo.save(new Module(null, "Pfe", "M521", "https://drive.google.com/file/d/1sT_EehtEt8n5nxLdDAj0kOK5BrFJCpfO/view?usp=sharing", 0, s2N5Gl, null, null, en));
 
-            noteRepo.save(new Note(null, (float) 18.20,module1,e));
+            noteRepo.save(new Note(null, (float) 18.20, module1, e));
+            absenceRepo.save(new Absence(null, 2, module2, e));
+            absenceRepo.save(new Absence(null, 4, module1, e));
 
             System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
             //System.out.println(moduleRepo.findByEtudiantInformation("s1",Niveau.quatriemeAnnee,Filiere.GL));

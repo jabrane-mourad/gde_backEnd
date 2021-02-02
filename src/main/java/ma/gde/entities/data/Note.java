@@ -15,7 +15,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class Note implements Serializable {
     @Id

@@ -26,6 +26,7 @@ public class Module implements Serializable {
     private String nom;
     private String cleCours;
     private String source;
+    private int nbrHeure;
 
     @ManyToOne
     @JoinColumn(nullable = false)
