@@ -7,6 +7,9 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import ma.gde.controller.service.interfaces.FilesStorageService;
+import ma.gde.dao.ModuleRepo;
+import ma.gde.entities.Module;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService {
+    @Autowired
+    private ModuleRepo moduleRepo;
 
     private final Path root = Paths.get("uploads");
 
@@ -28,9 +33,14 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public void save(MultipartFile file,String motCle) {
+    public void save(MultipartFile file,String motCle,Long idCours,String url) {
+
         try {
-            Files.copy(file.getInputStream(), this.root.resolve(motCle+".pdf"));
+            Files.copy(file.getInputStream(), this.root.resolve(motCle));
+            Module module=moduleRepo.getOne(idCours);
+            module.setCleCours(motCle);
+            module.setSource(url);
+            moduleRepo.save(module);
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }

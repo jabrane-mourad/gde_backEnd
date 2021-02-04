@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 public interface FilesStorageService {
     public void init();
 
-    public void save(MultipartFile file,String motCle);
+    public void save(MultipartFile file,String motCle,Long idCours,String url);
 
     public Resource load(String filename);
 

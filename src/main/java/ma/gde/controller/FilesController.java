@@ -30,12 +30,12 @@ public class FilesController {
     FilesStorageService storageService;
 
     @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("motCle") String motCle) {
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("motCle") String motCle,@RequestParam("idCours") Long idCours) {
+        motCle=motCle+".pdf";
         String url = MvcUriComponentsBuilder.fromMethodName(FilesController.class, "getFile", motCle).build().toString();
-        System.out.println(url);
         String message = "";
         try {
-            storageService.save(file,motCle);
+            storageService.save(file,motCle,idCours,url);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {

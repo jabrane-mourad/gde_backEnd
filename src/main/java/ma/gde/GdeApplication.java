@@ -73,8 +73,8 @@ public class GdeApplication {
             Semestre s1N1 = new Semestre(null, "s1", Niveau.premierAnnee, Filiere.CP, Departement.INFO, "https://drive.google.com/file/d/1kkpBGwnhZmTdJvXh9zzAV1wGvCL0Ljsj/view?usp=sharing", null);
             Semestre s2N1 = new Semestre(null, "s2", Niveau.premierAnnee, Filiere.CP, Departement.INFO, "https://drive.google.com/file/d/1vm4vXVo5mzZWEfKBGKyMdFe6T917pX2b/view?usp=sharing", null);
 
-            Semestre s1N2 = new Semestre(null, "s1", Niveau.deuxiemeAnnee, Filiere.GL, Departement.INFO, "https://drive.google.com/file/d/1oCbc4lXYMLyDVEBNxsCfj87e7WEcecU0/view?usp=sharing", null);
-            Semestre s2N2 = new Semestre(null, "s2", Niveau.deuxiemeAnnee, Filiere.GL, Departement.INFO, "https://drive.google.com/file/d/1wGbGNhiUQ3Au8mVo_cw1prqDK0tmap3M/view?usp=sharing", null);
+            Semestre s1N2 = new Semestre(null, "s1", Niveau.deuxiemeAnnee, Filiere.CP, Departement.INFO, "https://drive.google.com/file/d/1oCbc4lXYMLyDVEBNxsCfj87e7WEcecU0/view?usp=sharing", null);
+            Semestre s2N2 = new Semestre(null, "s2", Niveau.deuxiemeAnnee, Filiere.CP, Departement.INFO, "https://drive.google.com/file/d/1wGbGNhiUQ3Au8mVo_cw1prqDK0tmap3M/view?usp=sharing", null);
 
             Semestre s1N3Gl = new Semestre(null, "s1", Niveau.troisiemeAnnee, Filiere.GL, Departement.INFO, "https://drive.google.com/file/d/1h86n2iz5TApKyHEOdA2osgcWbx3ycwQR/view?usp=sharing", null);
             Semestre s2N3Gl = new Semestre(null, "s2", Niveau.troisiemeAnnee, Filiere.GL, Departement.INFO, "https://drive.google.com/file/d/132xiM5fXVExzyaMwa6rdUlc3RyeQZuqU/view?usp=sharing", null);
