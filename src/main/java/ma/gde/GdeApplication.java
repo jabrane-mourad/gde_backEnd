@@ -1,6 +1,5 @@
 package ma.gde;
 
-import ma.gde.controller.FilesController;
 import ma.gde.controller.service.implementation.UtilisateurService;
 import ma.gde.controller.service.interfaces.FilesStorageService;
 import ma.gde.dao.*;
@@ -13,18 +12,13 @@ import ma.gde.entities.utilisateur.Administrateur;
 import ma.gde.entities.utilisateur.Enseignant;
 import ma.gde.entities.utilisateur.Etudiant;
 import ma.gde.enun.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.util.Date;
 
@@ -123,23 +117,43 @@ public class GdeApplication {
             moduleRepo.save(new Module(null, "Statistiques", "M323", "http://localhost:8080/files/M323.pdf", 18, s2N3Gl, null, null, en));
 
             Module module1 = new Module(null, "Méthodes d'analyse et conception", "M411", "http://localhost:8080/files/M411.pdf", 28, s1N4Gl, null, null, en);
-            moduleRepo.save(module1);
             Module module2 = new Module(null, "Recherche Opérationnelle", "M412", "http://localhost:8080/files/M412.pdf", 16, s1N4Gl, null, null, en);
+            Module module3 = new Module(null, "Technologie", "M413", "http://localhost:8080/files/M413.pdf", 14, s1N4Gl, null, null, en);
+
+
+            Module module4 = new Module(null, "Systèmes", "M421", "http://localhost:8080/files/M421.pdf", 15, s2N4Gl, null, null, en);
+            Module module5 = new Module(null, "Fonctions  clés de l'entreprise", "M422", "http://localhost:8080/files/M422.pdf", 18, s2N4Gl, null, null, en);
+            Module module6 = new Module(null, "Oracle", "M423", "http://localhost:8080/files/M423.pdf", 18, s2N4Gl, null, null, en);
+            Module module7 = new Module(null, "Technologie jee", "M511", "http://localhost:8080/files/M511.pdf", 20, s1N5Gl, null, null, en);
+
+            Module module8 = new Module(null, "Administration et Sécurité Systèmes & Réseaux", "M512", "http://localhost:8080/files/M512.pdf", 22, s1N5Gl, null, null, en);
+            Module module9 = new Module(null, "Système distribué ", "M513", "http://localhost:8080/files/M523.pdf", 26, s1N5Gl, null, null, en);
+
+
+            Module module10 = new Module(null, "Pfe", "M521", "http://localhost:8080/files/M521.pdf", 0, s2N5Gl, null, null, en);
+            moduleRepo.save(module1);
             moduleRepo.save(module2);
-            moduleRepo.save(new Module(null, "Technologie", "M413", "http://localhost:8080/files/M413.pdf", 14, s1N4Gl, null, null, en));
+            moduleRepo.save(module3);
 
-            moduleRepo.save(new Module(null, "Systèmes", "M421", "http://localhost:8080/files/M421.pdf", 15, s2N4Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Fonctions  clés de l'entreprise", "M422", "http://localhost:8080/files/M422.pdf", 18, s2N4Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Oracle", "M423", "http://localhost:8080/files/M423.pdf", 18, s2N4Gl, null, null, en));
-
-            moduleRepo.save(new Module(null, "Technologie jee", "M511", "http://localhost:8080/files/M511.pdf", 20, s1N5Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Administration et Sécurité Systèmes & Réseaux", "M512", "http://localhost:8080/files/M512.pdf", 22, s1N5Gl, null, null, en));
-            moduleRepo.save(new Module(null, "Système distribué ", "M513", "http://localhost:8080/files/M523.pdf", 26, s1N5Gl, null, null, en));
-
-
-            moduleRepo.save(new Module(null, "Pfe", "M521", "http://localhost:8080/files/M521.pdf", 0, s2N5Gl, null, null, en));
+            moduleRepo.save(module4);
+            moduleRepo.save(module5);
+            moduleRepo.save(module6);
+            moduleRepo.save(module7);
+            moduleRepo.save(module8);
+            moduleRepo.save(module9);
+            moduleRepo.save(module10);
 
             noteRepo.save(new Note(null, (float) 18.20, module1, e));
+            noteRepo.save(new Note(null, (float) 8.45, module2, e));
+            noteRepo.save(new Note(null, (float) 18.20, module3, e));
+            noteRepo.save(new Note(null, (float) 14.28, module4, e));
+            noteRepo.save(new Note(null, (float) 15.08, module5, e));
+            noteRepo.save(new Note(null, (float) 8.00, module6, e));
+            noteRepo.save(new Note(null, (float) 13.25, module7, e));
+            noteRepo.save(new Note(null, (float) 11.22, module8, e));
+            noteRepo.save(new Note(null, (float) 12.66, module9, e));
+            noteRepo.save(new Note(null, (float) 19.00, module10, e));
+
             absenceRepo.save(new Absence(null, 2, module2, e));
             absenceRepo.save(new Absence(null, 4, module1, e));
 

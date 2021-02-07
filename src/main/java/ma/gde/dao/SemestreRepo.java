@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin("http://localhost:4200")
 public interface SemestreRepo extends JpaRepository<Semestre, Long> {
+
     @Query(value = "SELECT s FROM Semestre s where s.nom=?1 and s.niveau=?2 and s.filiere=?3")
     Semestre findByEtudiantInformation(
             @Param("nom") String nom,

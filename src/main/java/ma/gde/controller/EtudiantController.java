@@ -3,6 +3,7 @@ package ma.gde.controller;
 import ma.gde.dao.*;
 import ma.gde.dto.DemandeDTO;
 import ma.gde.entities.Demande;
+import ma.gde.entities.Module;
 import ma.gde.entities.Semestre;
 import ma.gde.entities.data.Absence;
 import ma.gde.entities.data.Note;
@@ -10,9 +11,9 @@ import ma.gde.entities.utilisateur.Etudiant;
 import ma.gde.enun.Etat;
 import ma.gde.enun.Filiere;
 import ma.gde.enun.Niveau;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,20 +26,30 @@ public class EtudiantController {
     private EtudiantRepo etudiantRepo;
     private NoteRepo noteRepo;
     private AbsenceRepo absenceRepo;
+    private ModuleRepo moduleRepo;
 
-    public EtudiantController(SemestreRepo semestreRepo, DemandeRepo demandeRepo, EtudiantRepo etudiantRepo, NoteRepo noteRepo, AbsenceRepo absenceRepo) {
+    public EtudiantController(SemestreRepo semestreRepo, DemandeRepo demandeRepo, EtudiantRepo etudiantRepo, NoteRepo noteRepo, AbsenceRepo absenceRepo, ModuleRepo moduleRepo) {
         this.semestreRepo = semestreRepo;
         this.demandeRepo = demandeRepo;
         this.etudiantRepo = etudiantRepo;
         this.noteRepo = noteRepo;
         this.absenceRepo = absenceRepo;
+        this.moduleRepo = moduleRepo;
     }
 
     @GetMapping("/modules")
-    public Semestre modules(@RequestParam("nom") String nom,
+    public List<Module> modules(@RequestParam("nom") String nom,
                             @RequestParam("niveau") Niveau niveau,
                             @RequestParam("filiere") Filiere filiere) {
-        return semestreRepo.findByEtudiantInformation(nom, niveau, filiere);
+        return moduleRepo.findByEtudiantInformation(nom, niveau, filiere);
+    }
+
+    @GetMapping("/modulesByMotCle")
+    public List<Module> modulesByMotCle(@RequestParam("nom") String nom,
+                                    @RequestParam("niveau") Niveau niveau,
+                                    @RequestParam("filiere") Filiere filiere,
+                                    @RequestParam("motCle") String motCle) {
+        return moduleRepo.modulesByMotCle(nom,niveau,filiere,motCle);
     }
 
     @PostMapping("/demandes")

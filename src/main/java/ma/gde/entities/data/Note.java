@@ -1,6 +1,7 @@
 package ma.gde.entities.data;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,5 +28,6 @@ public class Note implements Serializable {
     private Module module;
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
     private Etudiant etudiant;
 }
