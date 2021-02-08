@@ -20,9 +20,9 @@ public interface DemandeRepo extends JpaRepository<Demande, Long> {
             @Param("codeMasar") String codeMasar
     );
 
-    @Query(value = "SELECT d FROM Demande d where d.typeDemande=?1 and d.etat=?2 ")
+    @Query(value = "SELECT d FROM Demande d where d.typeDemande=?1 and d.etat='attente' ")
     List<Demande> getDemandesByTypeAndEtat(
-            @Param("typeDemande") TypeDemande typeDemande,
-            @Param("etatDemande") Etat etatDemande
+            @Param("typeDemande") TypeDemande typeDemande
     );
+
 }

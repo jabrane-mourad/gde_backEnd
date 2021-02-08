@@ -16,7 +16,6 @@ import java.io.Serializable;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class)
 public class Demande implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +27,7 @@ public class Demande implements Serializable {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Etudiant etudiant;
+
     public Demande(Long id, TypeDemande typeDemande, String description, Etudiant etudiant) {
         this.id = id;
         this.typeDemande = typeDemande;

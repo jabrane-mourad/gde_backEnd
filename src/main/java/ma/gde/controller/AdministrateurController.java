@@ -1,8 +1,11 @@
 package ma.gde.controller;
 
 import ma.gde.controller.service.interfaces.AdministrateurServiceIn;
+import ma.gde.dto.DemandeDTO;
 import ma.gde.entities.Demande;
+import ma.gde.entities.Semestre;
 import ma.gde.enun.Etat;
+import ma.gde.enun.Filiere;
 import ma.gde.enun.TypeDemande;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +22,16 @@ public class AdministrateurController {
     }
 
     @GetMapping("/demandes")
-    public List<Demande> demandes(@RequestParam("typeDemande") TypeDemande typeDemande,@RequestParam("etatDemande") Etat etatDemande) {
-        return administrateurService.getDemandeByTypeAndEtat(typeDemande,etatDemande);
+    public List<Demande> getDemandes(@RequestParam("typeDemande") TypeDemande typeDemande) {
+        return administrateurService.getDemandeByTypeAndEtat(typeDemande);
+    }
+
+    @PostMapping("/demandes/accepter/{id}")
+    public void ajouterDemande(@PathVariable("id") long id) {
+        administrateurService.accepterdemande(id);
+    }
+    @PostMapping("/demandes/refuser")
+    public void ajouterDemande(@RequestParam("id") Long id,@RequestParam("justification") String justification) {
+        administrateurService.refuserdemande(id,justification);
     }
 }
