@@ -1,6 +1,6 @@
 package ma.gde.controller;
 
-import ma.gde.controller.service.interfaces.UtilisateurServiceIn;
+import ma.gde.service.interfaces.UtilisateurServiceIn;
 import ma.gde.entities.Semestre;
 import ma.gde.enun.Filiere;
 import org.springframework.web.bind.annotation.*;

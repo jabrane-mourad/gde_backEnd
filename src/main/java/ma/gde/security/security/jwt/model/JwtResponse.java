@@ -1,7 +1,6 @@
 package ma.gde.security.security.jwt.model;
 
-import ma.gde.entities.utilisateur.Utilisateur;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import ma.gde.entities.Utilisateur;
 
 import java.io.Serializable;
 public class JwtResponse implements Serializable {

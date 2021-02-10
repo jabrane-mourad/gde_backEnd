@@ -1,4 +1,4 @@
-package ma.gde.controller.service.interfaces;
+package ma.gde.service.interfaces;
 
 import ma.gde.entities.Demande;
 import ma.gde.entities.Semestre;

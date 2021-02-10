@@ -1,6 +1,6 @@
-package ma.gde.controller.service.implementation;
+package ma.gde.service.implementation;
 
-import ma.gde.controller.service.interfaces.AdministrateurServiceIn;
+import ma.gde.service.interfaces.AdministrateurServiceIn;
 import ma.gde.dao.DemandeRepo;
 import ma.gde.dao.SemestreRepo;
 import ma.gde.entities.Demande;

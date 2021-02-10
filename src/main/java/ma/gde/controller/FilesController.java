@@ -2,7 +2,7 @@ package ma.gde.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ma.gde.controller.service.interfaces.FilesStorageService;
+import ma.gde.service.interfaces.FilesStorageService;
 import ma.gde.dto.FileInfo;
 import ma.gde.dto.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;

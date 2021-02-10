@@ -1,11 +1,8 @@
 package ma.gde.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ma.gde.entities.utilisateur.Etudiant;
 import ma.gde.enun.Etat;
 import ma.gde.enun.TypeDemande;
 

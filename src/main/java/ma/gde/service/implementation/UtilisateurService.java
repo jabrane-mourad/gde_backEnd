@@ -1,10 +1,10 @@
-package ma.gde.controller.service.implementation;
+package ma.gde.service.implementation;
 
-import ma.gde.controller.service.interfaces.UtilisateurServiceIn;
+import ma.gde.service.interfaces.UtilisateurServiceIn;
 import ma.gde.dao.SemestreRepo;
 import ma.gde.dao.UtilisateurRepo;
 import ma.gde.entities.Semestre;
-import ma.gde.entities.utilisateur.Utilisateur;
+import ma.gde.entities.Utilisateur;
 import ma.gde.enun.Filiere;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

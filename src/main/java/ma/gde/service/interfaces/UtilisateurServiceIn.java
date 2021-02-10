@@ -1,7 +1,7 @@
-package ma.gde.controller.service.interfaces;
+package ma.gde.service.interfaces;
 
 import ma.gde.entities.Semestre;
-import ma.gde.entities.utilisateur.Utilisateur;
+import ma.gde.entities.Utilisateur;
 import ma.gde.enun.Filiere;
 
 import java.util.List;

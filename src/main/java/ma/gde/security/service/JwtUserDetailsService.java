@@ -1,7 +1,7 @@
 package ma.gde.security.service;
 
 import ma.gde.dao.UtilisateurRepo;
-import ma.gde.entities.utilisateur.Utilisateur;
+import ma.gde.entities.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

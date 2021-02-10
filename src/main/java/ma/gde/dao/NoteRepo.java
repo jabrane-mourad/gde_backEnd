@@ -1,8 +1,6 @@
 package ma.gde.dao;
 
-import ma.gde.entities.Semestre;
-import ma.gde.entities.data.Note;
-import ma.gde.enun.Filiere;
+import ma.gde.entities.Note;
 import ma.gde.enun.Niveau;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

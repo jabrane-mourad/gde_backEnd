@@ -1,11 +1,7 @@
 package ma.gde.controller;
 
-import ma.gde.controller.service.interfaces.AdministrateurServiceIn;
-import ma.gde.dto.DemandeDTO;
+import ma.gde.service.interfaces.AdministrateurServiceIn;
 import ma.gde.entities.Demande;
-import ma.gde.entities.Semestre;
-import ma.gde.enun.Etat;
-import ma.gde.enun.Filiere;
 import ma.gde.enun.TypeDemande;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package ma.gde.entities.utilisateur;
+package ma.gde.entities;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;

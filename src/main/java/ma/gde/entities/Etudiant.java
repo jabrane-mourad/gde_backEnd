@@ -1,14 +1,10 @@
-package ma.gde.entities.utilisateur;
+package ma.gde.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ma.gde.entities.Demande;
 import ma.gde.enun.Filiere;
-import ma.gde.entities.data.Absence;
-import ma.gde.entities.data.Note;
 import ma.gde.enun.Niveau;
 import ma.gde.enun.Role;
 

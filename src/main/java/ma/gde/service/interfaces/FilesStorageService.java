@@ -1,4 +1,4 @@
-package ma.gde.controller.service.interfaces;
+package ma.gde.service.interfaces;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;

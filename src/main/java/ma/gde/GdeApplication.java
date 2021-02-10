@@ -1,16 +1,16 @@
 package ma.gde;
 
-import ma.gde.controller.service.implementation.UtilisateurService;
-import ma.gde.controller.service.interfaces.FilesStorageService;
+import ma.gde.service.implementation.UtilisateurService;
+import ma.gde.service.interfaces.FilesStorageService;
 import ma.gde.dao.*;
 import ma.gde.entities.Demande;
 import ma.gde.entities.Module;
 import ma.gde.entities.Semestre;
-import ma.gde.entities.data.Absence;
-import ma.gde.entities.data.Note;
-import ma.gde.entities.utilisateur.Administrateur;
-import ma.gde.entities.utilisateur.Enseignant;
-import ma.gde.entities.utilisateur.Etudiant;
+import ma.gde.entities.Absence;
+import ma.gde.entities.Note;
+import ma.gde.entities.Administrateur;
+import ma.gde.entities.Enseignant;
+import ma.gde.entities.Etudiant;
 import ma.gde.enun.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -70,7 +70,7 @@ public class GdeApplication {
             utilisateurService.save(achiri);
 
             Enseignant hadad = new Enseignant(null, "hadad", "chaimaa", new Date(),
-                    "hadad@gmail.com", "hadad", "id5697");
+                    "hadad@gmail.com", "hadadhadad", "id5697");
             utilisateurService.save(hadad);
 
             Enseignant fadili = new Enseignant(null, "fadili", "nihal", new Date(),

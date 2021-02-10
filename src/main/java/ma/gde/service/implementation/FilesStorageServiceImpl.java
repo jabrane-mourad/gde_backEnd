@@ -1,4 +1,4 @@
-package ma.gde.controller.service.implementation;
+package ma.gde.service.implementation;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import ma.gde.controller.service.interfaces.FilesStorageService;
+import ma.gde.service.interfaces.FilesStorageService;
 import ma.gde.dao.ModuleRepo;
 import ma.gde.entities.Module;
 import org.springframework.beans.factory.annotation.Autowired;

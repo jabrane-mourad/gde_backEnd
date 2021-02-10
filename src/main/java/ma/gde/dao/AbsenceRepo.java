@@ -1,7 +1,6 @@
 package ma.gde.dao;
 
-import ma.gde.entities.data.Absence;
-import ma.gde.entities.data.Note;
+import ma.gde.entities.Absence;
 import ma.gde.enun.Niveau;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
